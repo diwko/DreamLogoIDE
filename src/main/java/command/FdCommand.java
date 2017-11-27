@@ -1,14 +1,11 @@
 package command;
 
-import model.Turtle;
-
-public class FDCommand extends SingleCommand {
-    private final String KEYWORD = "fd";
+public class FdCommand extends SingleCommand {
     private double distance;
 
-    public FDCommand(Turtle turtle, String args) throws IllegalArgumentException {
-        super(turtle);
-
+    public FdCommand(double distance, String commandText) throws IllegalArgumentException {
+        super(commandText);
+        this.distance = distance;
     }
 
     @Override
@@ -28,6 +25,6 @@ public class FDCommand extends SingleCommand {
 
     @Override
     public String getText() {
-        return null;
+        return commandText;
     }
 }

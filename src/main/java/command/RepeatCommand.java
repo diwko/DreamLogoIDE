@@ -3,16 +3,14 @@ package command;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RepeatCommand implements Command {
-    private final String KEYWORD = "repeat";
+public class RepeatCommand extends SingleCommand {
     private int n;
     private List<Command> commands = new LinkedList<>();
 
-    public RepeatCommand(int n) {
+    public RepeatCommand(int n, String commandText) {
+        super(commandText);
         this.n = n;
     }
-
-
 
     public void addCommand(Command command) {
         commands.add(command);
@@ -37,11 +35,6 @@ public class RepeatCommand implements Command {
 
     @Override
     public String getText() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(KEYWORD.toUpperCase());
-        stringBuilder.append(" [ ");
-        commands.forEach(c -> stringBuilder.append(c.getText()));
-        stringBuilder.append(" ]");
-        return stringBuilder.toString();
+        return commandText;
     }
 }

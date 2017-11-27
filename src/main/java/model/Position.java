@@ -1,7 +1,6 @@
 package model;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 public class Position {
     private final double X;
@@ -33,8 +32,8 @@ public class Position {
     }
 
     public Position addDistance(double distance) {
-        double newX = X + distance * cos(ROTATION);
-        double newY = Y + distance * sin(ROTATION);
+        double newX = X + distance * cos(toRadians(ROTATION));
+        double newY = Y + distance * sin(toRadians(ROTATION));
 
         return new Position(newX, newY, ROTATION);
     }
