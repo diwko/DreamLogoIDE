@@ -1,11 +1,32 @@
 package command;
 
-public interface Command {
-    void execute();
+import model.Turtle;
 
-    void undo();
+import java.text.ParseException;
 
-    void redo();
+public abstract class Command {
+    protected final String[] arguments;
+    protected Turtle turtle;
 
-    String getText();
+    public Command(String[] arguments, Turtle turtle) throws ParseException {
+        this.arguments = arguments;
+        this.turtle = turtle;
+    }
+
+    public String getText() {
+        StringBuilder builder = new StringBuilder();
+        for (String arg : arguments)
+            builder.append(arg.toUpperCase() + " ");
+        return builder.toString();
+    }
+
+    public Turtle getTurtle() {
+        return turtle;
+    }
+
+    public abstract void execute();
+
+    public abstract void undo();
+
+    public abstract void redo();
 }

@@ -1,0 +1,4 @@
+fd,command.FdCommand,1
+rt,command.RtCommand,1
+np,command.FdCommand,1
+pw,command.RtCommand,1

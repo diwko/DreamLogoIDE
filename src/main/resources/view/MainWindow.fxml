@@ -37,7 +37,12 @@
                   BorderPane.alignment="CENTER"/>
     </right>
    <bottom>
-       <TextField fx:id="commandInputField" onAction="#executeCommand" BorderPane.alignment="CENTER"/>
+       <VBox alignment="BOTTOM_CENTER" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <children>
+               <TextField fx:id="commandInputField" onAction="#executeCommand"/>
+               <TextField fx:id="errorMessageField" disable="true"/>
+           </children>
+       </VBox>
    </bottom>
 
 </BorderPane>

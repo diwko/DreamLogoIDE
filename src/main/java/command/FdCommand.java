@@ -1,30 +1,34 @@
 package command;
 
-public class FdCommand extends SingleCommand {
+import model.Turtle;
+
+import java.text.ParseException;
+
+public class FdCommand extends Command {
     private double distance;
 
-    public FdCommand(double distance, String commandText) throws IllegalArgumentException {
-        super(commandText);
-        this.distance = distance;
+    public FdCommand(String[] arguments, Turtle turtle) throws ParseException {
+        super(arguments, turtle);
+
+        try {
+            distance = Double.parseDouble(arguments[1]);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Incorrect argument. Argument must be a number.", 0);
+        }
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
         turtle.move(distance);
     }
 
     @Override
     public void undo() {
-
+//      TODO
     }
 
     @Override
     public void redo() {
-
-    }
-
-    @Override
-    public String getText() {
-        return commandText;
+//      TODO
     }
 }

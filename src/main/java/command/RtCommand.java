@@ -1,11 +1,20 @@
 package command;
 
-public class RtCommand extends SingleCommand {
+import model.Turtle;
+
+import java.text.ParseException;
+
+public class RtCommand extends Command {
     private double angle;
 
-    public RtCommand(double angle, String commandText) throws IllegalArgumentException {
-        super(commandText);
-        this.angle = angle;
+    public RtCommand(String[] arguments, Turtle turtle) throws ParseException {
+        super(arguments, turtle);
+
+        try {
+            angle = Double.parseDouble(arguments[1]);
+        } catch (NumberFormatException e) {
+            throw new ParseException("Incorrect argument. Argument must be a number.", 0);
+        }
     }
 
     @Override
@@ -15,17 +24,11 @@ public class RtCommand extends SingleCommand {
 
     @Override
     public void undo() {
-
+//      TODO
     }
 
     @Override
     public void redo() {
-
-    }
-
-    @Override
-    public String getText() {
-        return commandText;
+//      TODO
     }
 }
-

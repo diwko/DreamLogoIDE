@@ -30,10 +30,6 @@ public class Turtle {
         return isPenDown;
     }
 
-    public void setPenDown(boolean penDown) {
-        isPenDown = penDown;
-    }
-
     public Drawer getDrawer() {
         return drawer;
     }
@@ -42,10 +38,10 @@ public class Turtle {
         this.drawer = drawer;
     }
 
-    public void move(double distance) throws IllegalArgumentException {
+    public void move(double distance) throws IllegalStateException {
         Position newPosition = position.addDistance(distance);
         if (!drawer.isCorrectPosition(newPosition))
-            throw new IllegalArgumentException("New position is outside the area");
+            throw new IllegalStateException("New position is outside the area");
 
         if (isPenDown)
             drawer.drawLine(position, newPosition);

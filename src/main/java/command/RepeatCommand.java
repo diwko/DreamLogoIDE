@@ -1,19 +1,19 @@
 package command;
 
+import model.Turtle;
+
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class RepeatCommand extends SingleCommand {
+public class RepeatCommand extends Command {
     private int n;
     private List<Command> commands = new LinkedList<>();
 
-    public RepeatCommand(int n, String commandText) {
-        super(commandText);
-        this.n = n;
-    }
+    public RepeatCommand(String[] arguments, Turtle turtle) throws ParseException {
+        super(arguments, turtle);
 
-    public void addCommand(Command command) {
-        commands.add(command);
+//        TODO
     }
 
     @Override
@@ -25,16 +25,11 @@ public class RepeatCommand extends SingleCommand {
 
     @Override
     public void undo() {
-        //TODO
+//        TODO
     }
 
     @Override
     public void redo() {
-        //TODO
-    }
-
-    @Override
-    public String getText() {
-        return commandText;
+//        TODO
     }
 }

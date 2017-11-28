@@ -23,7 +23,8 @@ public class DrawerImp implements Drawer {
     }
 
     public boolean isCorrectPosition(Position position) {
-        return (position.getX() <= canvas.getWidth()) && (position.getY() <= canvas.getHeight());
+        return (position.getX() <= canvas.getWidth()) && (position.getY() <= canvas.getHeight() &&
+                (position.getX()) >= 0 && (position.getY() >= 0));
     }
 
     @Override

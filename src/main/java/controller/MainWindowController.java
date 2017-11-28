@@ -2,7 +2,6 @@ package controller;
 
 import command.Command;
 import command.CommandRegistry;
-import command.SingleCommand;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
@@ -15,8 +14,13 @@ import model.Turtle;
 import parser.CommandParser;
 import parser.CommandParserImp;
 
+import java.text.ParseException;
+
 
 public class MainWindowController {
+    @FXML
+    private Canvas canvas;
+
     @FXML
     private ListView<Command> commandHistoryView;
 
@@ -24,7 +28,7 @@ public class MainWindowController {
     private TextField commandInputField;
 
     @FXML
-    private Canvas canvas;
+    private TextField errorMessageField;
 
     private CommandParser commmandParser;
     private CommandRegistry commandRegistry;
@@ -32,13 +36,11 @@ public class MainWindowController {
     private Turtle turtle;
 
     public void initialize() {
-        commmandParser = new CommandParserImp();
+        commmandParser = new CommandParserImp(getClass().getClassLoader().getResource("Commands.csv").getFile());
         commandRegistry = new CommandRegistry();
 
         drawer = new DrawerImp(canvas);
         turtle = new Turtle(new Position(canvas.getWidth() / 2, canvas.getHeight() / 2, 270), drawer);
-
-        canvas.setStyle("");
 
         setCommandHistoryView();
     }
@@ -55,10 +57,15 @@ public class MainWindowController {
 
     @FXML
     public void executeCommand() {
-        SingleCommand command = (SingleCommand) commmandParser.getCommand(commandInputField.getText());
-        command.setTurtle(turtle);
-        commandRegistry.executeCommand(command);
-        commandInputField.clear();
+        errorMessageField.clear();
+        try {
+            Command command = commmandParser.getCommand(commandInputField.getText(), turtle);
+            commandRegistry.executeCommand(command);
+        } catch (ParseException | IllegalStateException e) {
+            errorMessageField.setText(e.getMessage());
+        } finally {
+            commandInputField.clear();
+        }
     }
 
 }

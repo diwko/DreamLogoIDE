@@ -7,7 +7,7 @@ public class CommandRegistry {
     private ObservableList<Command> commandStack = FXCollections.observableArrayList();
     private ObservableList<Command> undoCommandStack = FXCollections.observableArrayList();
 
-    public void executeCommand(Command command) {
+    public void executeCommand(Command command) throws IllegalStateException {
         command.execute();
         commandStack.add(command);
         undoCommandStack.clear();
