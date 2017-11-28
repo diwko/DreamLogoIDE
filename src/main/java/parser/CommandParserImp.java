@@ -3,11 +3,12 @@ package parser;
 import command.Command;
 import model.Turtle;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +19,7 @@ public class CommandParserImp implements CommandParser {
     private Map<String, String> commands = new HashMap<>();
     private Map<String, Integer> argumentsNumber = new HashMap<>();
 
-    public CommandParserImp(String commandsFile) {
+    public CommandParserImp(String commandsFile) throws IOException {
         loadCommandsFromFile(commandsFile);
     }
 
@@ -49,8 +50,11 @@ public class CommandParserImp implements CommandParser {
         }
     }
 
-    private void loadCommandsFromFile(String path) {
-        try (Stream<String> lines = Files.lines(Paths.get(path))) {
+    private void loadCommandsFromFile(String path) throws IOException {
+        try (InputStream in = getClass().getResourceAsStream("/" + path)) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+            Stream<String> lines = br.lines();
             lines.forEach(line -> {
                 try {
                     parseLine(line);
@@ -59,7 +63,7 @@ public class CommandParserImp implements CommandParser {
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException("Commands File not found");
         }
     }
 

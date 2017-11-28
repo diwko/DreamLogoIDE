@@ -14,6 +14,7 @@ import model.Turtle;
 import parser.CommandParser;
 import parser.CommandParserImp;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 
@@ -36,9 +37,12 @@ public class MainWindowController {
     private Turtle turtle;
 
     public void initialize() {
-        commmandParser = new CommandParserImp(getClass().getClassLoader().getResource("Commands.csv").getFile());
+        try {
+            commmandParser = new CommandParserImp("Commands.csv");
+        } catch (IOException e) {
+            setErrorMessage(e.getMessage());
+        }
         commandRegistry = new CommandRegistry();
-
         drawer = new DrawerImp(canvas);
         turtle = new Turtle(new Position(canvas.getWidth() / 2, canvas.getHeight() / 2, 270), drawer);
 
@@ -62,10 +66,14 @@ public class MainWindowController {
             Command command = commmandParser.getCommand(commandInputField.getText(), turtle);
             commandRegistry.executeCommand(command);
         } catch (ParseException | IllegalStateException e) {
-            errorMessageField.setText(e.getMessage());
+            setErrorMessage(e.getMessage());
         } finally {
             commandInputField.clear();
         }
+    }
+
+    private void setErrorMessage(String text) {
+        errorMessageField.setText(text);
     }
 
 }
