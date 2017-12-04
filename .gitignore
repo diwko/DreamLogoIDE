@@ -33,7 +33,10 @@ out/
 
 
 #Gradle
-.gradle
+.gradle/
+gradle/
+/gradlew
+/gradlew.bat
 build/
 
 # Ignore Gradle GUI config
@@ -47,3 +50,4 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+
