@@ -1,4 +1,4 @@
-fd,command.FdCommand,1
-rt,command.RtCommand,1
-np,command.FdCommand,1
-pw,command.RtCommand,1
+fd,pl.edu.agh.to2.DreamLogoIDE.command.FdCommand,1
+rt,pl.edu.agh.to2.DreamLogoIDE.command.RtCommand,1
+np,pl.edu.agh.to2.DreamLogoIDE.command.FdCommand,1
+pw,pl.edu.agh.to2.DreamLogoIDE.command.RtCommand,1

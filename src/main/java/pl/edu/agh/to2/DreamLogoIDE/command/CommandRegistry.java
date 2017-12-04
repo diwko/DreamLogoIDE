@@ -1,4 +1,4 @@
-package command;
+package pl.edu.agh.to2.DreamLogoIDE.command;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

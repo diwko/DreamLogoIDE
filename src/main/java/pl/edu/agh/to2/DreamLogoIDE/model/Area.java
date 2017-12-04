@@ -1,4 +1,4 @@
-package model;
+package pl.edu.agh.to2.DreamLogoIDE.model;
 
 public class Area {
     private final double width;

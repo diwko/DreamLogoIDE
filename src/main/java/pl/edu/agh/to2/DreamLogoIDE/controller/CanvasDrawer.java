@@ -1,9 +1,9 @@
-package controller;
+package pl.edu.agh.to2.DreamLogoIDE.controller;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import model.Position;
+import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 
 public class CanvasDrawer implements Drawer {
     private Canvas canvas;

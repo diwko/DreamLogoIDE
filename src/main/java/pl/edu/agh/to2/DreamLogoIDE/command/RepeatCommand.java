@@ -1,6 +1,6 @@
-package command;
+package pl.edu.agh.to2.DreamLogoIDE.command;
 
-import model.Turtle;
+import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
 import java.util.LinkedList;

@@ -1,10 +1,10 @@
-package controller;
+package pl.edu.agh.to2.DreamLogoIDE.controller;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.paint.Color;
-import model.Position;
-import model.Turtle;
+import pl.edu.agh.to2.DreamLogoIDE.model.Position;
+import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 public class TurtleDrawingController {
     private Turtle turtle;

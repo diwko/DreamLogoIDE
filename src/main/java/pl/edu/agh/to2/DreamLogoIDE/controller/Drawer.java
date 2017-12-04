@@ -1,7 +1,7 @@
-package controller;
+package pl.edu.agh.to2.DreamLogoIDE.controller;
 
 import javafx.scene.paint.Color;
-import model.Position;
+import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 
 public interface Drawer {
     Color getPenColor();

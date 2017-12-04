@@ -1,4 +1,4 @@
-package model;
+package pl.edu.agh.to2.DreamLogoIDE.model;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
