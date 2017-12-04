@@ -1,7 +1,7 @@
-package parser;
+package pl.edu.agh.to2.DreamLogoIDE.parser;
 
-import command.Command;
-import model.Turtle;
+import pl.edu.agh.to2.DreamLogoIDE.command.Command;
+import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package model;
+package pl.edu.agh.to2.DreamLogoIDE.model;
 
 import static java.lang.Math.*;
 

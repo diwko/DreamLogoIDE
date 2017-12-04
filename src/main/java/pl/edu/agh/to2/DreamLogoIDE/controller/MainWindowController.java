@@ -1,18 +1,17 @@
-package controller;
+package pl.edu.agh.to2.DreamLogoIDE.controller;
 
-import command.Command;
-import command.CommandRegistry;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import model.Drawer;
-import model.DrawerImp;
-import model.Position;
-import model.Turtle;
-import parser.CommandParser;
-import parser.CommandParserImp;
+import pl.edu.agh.to2.DreamLogoIDE.command.Command;
+import pl.edu.agh.to2.DreamLogoIDE.command.CommandRegistry;
+import pl.edu.agh.to2.DreamLogoIDE.model.Area;
+import pl.edu.agh.to2.DreamLogoIDE.model.Position;
+import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
+import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParser;
+import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParserImp;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -33,7 +32,7 @@ public class MainWindowController {
 
     private CommandParser commmandParser;
     private CommandRegistry commandRegistry;
-    private Drawer drawer;
+    private TurtleDrawingController turtleDrawingController;
     private Turtle turtle;
 
     public void initialize() {
@@ -43,8 +42,11 @@ public class MainWindowController {
             setErrorMessage(e.getMessage());
         }
         commandRegistry = new CommandRegistry();
-        drawer = new DrawerImp(canvas);
-        turtle = new Turtle(new Position(canvas.getWidth() / 2, canvas.getHeight() / 2, 270), drawer);
+
+        turtle = new Turtle(new Position(canvas.getWidth() / 2, canvas.getHeight() / 2, 270),
+                new Area(canvas.getWidth(), canvas.getHeight()));
+
+        turtleDrawingController = new TurtleDrawingController(turtle, new CanvasDrawer(canvas));
 
         setCommandHistoryView();
     }

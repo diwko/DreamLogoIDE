@@ -1,3 +1,5 @@
+package pl.edu.agh.to2.DreamLogoIDE;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
