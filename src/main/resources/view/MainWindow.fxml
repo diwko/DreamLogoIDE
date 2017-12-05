@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111"
+            fx:controller="pl.edu.agh.to2.DreamLogoIDE.controller.MainWindowController">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                <MenuItem mnemonicParsing="false" text="New File" />
+                <MenuItem mnemonicParsing="false" text="Open File" />
+                <MenuItem mnemonicParsing="false" text="Save" />
+                <MenuItem mnemonicParsing="false" text="Save As" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+                <MenuItem mnemonicParsing="false" text="Undo" />
+                <MenuItem mnemonicParsing="false" text="Redo"/>
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <center>
+       <Canvas fx:id="canvas" height="200.0" width="200.0" BorderPane.alignment="CENTER"/>
+   </center>
+    <right>
+        <ListView fx:id="commandHistoryView" disable="true" prefHeight="200.0" prefWidth="200.0"
+                  BorderPane.alignment="CENTER"/>
+    </right>
+   <bottom>
+       <VBox alignment="BOTTOM_CENTER" prefHeight="0.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+           <children>
+               <TextField fx:id="commandInputField" onAction="#executeCommand"/>
+               <TextField fx:id="errorMessageField" disable="true"/>
+           </children>
+       </VBox>
+   </bottom>
+
+</BorderPane>
