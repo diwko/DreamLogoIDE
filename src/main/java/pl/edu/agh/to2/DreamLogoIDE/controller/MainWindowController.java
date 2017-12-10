@@ -5,8 +5,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
 import pl.edu.agh.to2.DreamLogoIDE.command.CommandRegistry;
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeCanvasDrawer;
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
+import pl.edu.agh.to2.DreamLogoIDE.drawer.TurtleDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Area;
 import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
@@ -19,7 +23,10 @@ import java.text.ParseException;
 
 public class MainWindowController {
     @FXML
-    private Canvas canvas;
+    private Canvas shapesCanvas;
+
+    @FXML
+    private Canvas turtleCanvas;
 
     @FXML
     private ListView<Command> commandHistoryView;
@@ -32,8 +39,9 @@ public class MainWindowController {
 
     private CommandParser commmandParser;
     private CommandRegistry commandRegistry;
-    private TurtleDrawingController turtleDrawingController;
     private Turtle turtle;
+    private ShapeDrawer shapeDrawer;
+    private TurtleDrawer turtleDrawer;
 
     public void initialize() {
         try {
@@ -41,12 +49,16 @@ public class MainWindowController {
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
+
         commandRegistry = new CommandRegistry();
 
-        turtle = new Turtle(new Position(canvas.getWidth() / 2, canvas.getHeight() / 2, 270),
-                new Area(canvas.getWidth(), canvas.getHeight()));
+        turtle = new Turtle(
+                new Position(shapesCanvas.getWidth() / 2, shapesCanvas.getHeight() / 2, 270),
+                new Area(shapesCanvas.getWidth(), shapesCanvas.getHeight()),
+                new Image(getClass().getResource("/pl.edu.agh.to2.DreamLogoIDE/img/turtle.png").toString()));
 
-        turtleDrawingController = new TurtleDrawingController(turtle, new CanvasDrawer(canvas));
+        shapeDrawer = new ShapeCanvasDrawer(turtle, shapesCanvas);
+        turtleDrawer = new TurtleDrawer(turtle, turtleCanvas);
 
         setCommandHistoryView();
     }
@@ -65,7 +77,7 @@ public class MainWindowController {
     public void executeCommand() {
         errorMessageField.clear();
         try {
-            Command command = commmandParser.getCommand(commandInputField.getText(), turtle);
+            Command command = commmandParser.getCommand(commandInputField.getText(), turtle, shapeDrawer);
             commandRegistry.executeCommand(command);
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
@@ -74,8 +86,15 @@ public class MainWindowController {
         }
     }
 
+    public void undoCommand() {
+        commandRegistry.undo();
+    }
+
+    public void redoCommand() {
+        commandRegistry.redo();
+    }
+
     private void setErrorMessage(String text) {
         errorMessageField.setText(text);
     }
-
 }

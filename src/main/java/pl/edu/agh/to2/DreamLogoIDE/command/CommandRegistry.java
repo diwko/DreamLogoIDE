@@ -18,7 +18,7 @@ public class CommandRegistry {
             return;
 
         Command lastUndoCommand = undoCommandStack.remove(undoCommandStack.size() - 1);
-        lastUndoCommand.undo();
+        lastUndoCommand.redo();
         commandStack.add(lastUndoCommand);
     }
 

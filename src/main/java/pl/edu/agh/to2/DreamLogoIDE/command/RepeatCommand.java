@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.DreamLogoIDE.command;
 
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
@@ -10,8 +11,8 @@ public class RepeatCommand extends Command {
     private int n;
     private List<Command> commands = new LinkedList<>();
 
-    public RepeatCommand(String[] arguments, Turtle turtle) throws ParseException {
-        super(arguments, turtle);
+    public RepeatCommand(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
+        super(arguments, turtle, shapeDrawer);
 
 //        TODO
     }

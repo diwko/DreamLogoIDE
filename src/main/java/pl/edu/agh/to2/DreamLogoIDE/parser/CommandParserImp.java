@@ -1,6 +1,7 @@
 package pl.edu.agh.to2.DreamLogoIDE.parser;
 
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.io.BufferedReader;
@@ -24,7 +25,7 @@ public class CommandParserImp implements CommandParser {
     }
 
     @Override
-    public Command getCommand(String command, Turtle turtle) throws ParseException {
+    public Command getCommand(String command, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
         String converted = command.trim().toLowerCase().replaceAll("\\s+", " ");
         String[] splitted = converted.split(" ");
 
@@ -36,14 +37,14 @@ public class CommandParserImp implements CommandParser {
             throw new ParseException("Incorrect number of arguments. Correct number: " + argsNumber, 0);
 
         String className = commands.get(splitted[0]);
-        return getCommandInstance(className, splitted, turtle);
+        return getCommandInstance(className, splitted, turtle, shapeDrawer);
     }
 
-    private Command getCommandInstance(String className, String[] arguments, Turtle turtle) throws ParseException {
+    private Command getCommandInstance(String className, String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
         try {
             Class<?> clazz = Class.forName(className);
-            Constructor<?> constructor = clazz.getConstructor(String[].class, Turtle.class);
-            return (Command) constructor.newInstance(arguments, turtle);
+            Constructor<?> constructor = clazz.getConstructor(String[].class, Turtle.class, ShapeDrawer.class);
+            return (Command) constructor.newInstance(arguments, turtle, shapeDrawer);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
                 NoSuchMethodException | ClassNotFoundException e) {
             throw new ParseException("Not implemented", 0);

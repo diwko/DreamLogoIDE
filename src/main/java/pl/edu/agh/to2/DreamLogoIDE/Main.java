@@ -11,7 +11,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/pl.edu.agh.to2.DreamLogoIDE/view/MainWindow.fxml"));
         primaryStage.setTitle("DreamLogoIDE");
-        primaryStage.setScene(new Scene(root, 500, 500));
+        primaryStage.setScene(new Scene(root, 1280, 720));
         primaryStage.show();
     }
 }
