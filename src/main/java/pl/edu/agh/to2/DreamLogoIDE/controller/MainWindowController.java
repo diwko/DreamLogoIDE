@@ -37,7 +37,7 @@ public class MainWindowController {
 
     public void initialize() {
         try {
-            commmandParser = new CommandParserImp("Commands.csv");
+            commmandParser = new CommandParserImp("pl.edu.agh.to2.DreamLogoIDE/Commands.csv");
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
