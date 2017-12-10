@@ -44,10 +44,10 @@
        </VBox>
    </bottom>
     <center>
-        <Pane prefHeight="680.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <Pane prefHeight="630.0" prefWidth="800.0" BorderPane.alignment="CENTER" style="-fx-background-color: white">
             <children>
-                <Canvas fx:id="shapesCanvas" height="680.0" width="800.0"/>
-                <Canvas fx:id="turtleCanvas" height="680.0" width="800.0"/>
+                <Canvas fx:id="shapesCanvas" height="630.0" width="800.0"/>
+                <Canvas fx:id="turtleCanvas" height="630.0" width="800.0"/>
             </children>
         </Pane>
     </center>
