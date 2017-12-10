@@ -9,8 +9,8 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/MainWindow.fxml"));
-        primaryStage.setTitle("Hello World");
+        Parent root = FXMLLoader.load(getClass().getResource("/pl.edu.agh.to2.DreamLogoIDE/view/MainWindow.fxml"));
+        primaryStage.setTitle("DreamLogoIDE");
         primaryStage.setScene(new Scene(root, 500, 500));
         primaryStage.show();
     }
