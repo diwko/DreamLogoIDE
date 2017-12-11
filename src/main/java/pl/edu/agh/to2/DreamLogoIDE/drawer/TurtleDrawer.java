@@ -1,7 +1,6 @@
 package pl.edu.agh.to2.DreamLogoIDE.drawer;
 
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -28,27 +27,21 @@ public class TurtleDrawer {
     }
 
     private ChangeListener<Position> positionChangeListener() {
-        return new ChangeListener<Position>() {
-            @Override
-            public void changed(ObservableValue<? extends Position> observable, Position oldValue, Position newValue) {
-                if (turtle.isHidden())
-                    return;
+        return (observable, oldValue, newValue) -> {
+            if (turtle.isHidden())
+                return;
 
-                clearCanvas();
-                drawTurtleIcon();
-            }
+            clearCanvas();
+            drawTurtleIcon();
         };
     }
 
     private ChangeListener<Boolean> isHiddenListener() {
-        return new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-                if (newValue)
-                    clearCanvas();
-                else
-                    drawTurtleIcon();
-            }
+        return (observable, oldValue, newValue) -> {
+            if (newValue)
+                clearCanvas();
+            else
+                drawTurtleIcon();
         };
     }
 
