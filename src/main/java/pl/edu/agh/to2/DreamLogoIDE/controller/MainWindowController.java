@@ -6,6 +6,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
 import pl.edu.agh.to2.DreamLogoIDE.command.CommandRegistry;
 import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeCanvasDrawer;
@@ -37,11 +38,15 @@ public class MainWindowController {
     @FXML
     private TextField errorMessageField;
 
+    @FXML
+    private BorderPane mainWindow;
+
     private CommandParser commmandParser;
     private CommandRegistry commandRegistry;
     private Turtle turtle;
     private ShapeDrawer shapeDrawer;
     private TurtleDrawer turtleDrawer;
+
 
     public void initialize() {
         try {
@@ -62,6 +67,7 @@ public class MainWindowController {
 
         setCommandHistoryView();
     }
+
 
     private void setCommandHistoryView() {
         commandHistoryView.setItems(commandRegistry.getCommandStack());

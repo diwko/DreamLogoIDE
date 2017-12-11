@@ -2,3 +2,11 @@ fd,pl.edu.agh.to2.DreamLogoIDE.command.FdCommand,1
 rt,pl.edu.agh.to2.DreamLogoIDE.command.RtCommand,1
 np,pl.edu.agh.to2.DreamLogoIDE.command.FdCommand,1
 pw,pl.edu.agh.to2.DreamLogoIDE.command.RtCommand,1
+lw,pl.edu.agh.to2.DreamLogoIDE.command.LtCommand,1
+lf,pl.edu.agh.to2.DreamLogoIDE.command.LtCommand,1
+ws,pl.edu.agh.to2.DreamLogoIDE.command.BkCommand,1
+bk,pl.edu.agh.to2.DreamLogoIDE.command.BkCommand,1
+st,pl.edu.agh.to2.DreamLogoIDE.command.StCommand,0
+pż,pl.edu.agh.to2.DreamLogoIDE.command.StCommand,0
+ht,pl.edu.agh.to2.DreamLogoIDE.command.HtCommand,0
+sż,pl.edu.agh.to2.DreamLogoIDE.command.HtCommand,0
