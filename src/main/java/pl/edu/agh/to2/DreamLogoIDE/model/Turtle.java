@@ -12,11 +12,21 @@ public class Turtle {
     private boolean penDown = true;
     private DoubleProperty penSize = new SimpleDoubleProperty(1.0);
     private ObjectProperty<Color> penColor = new SimpleObjectProperty<>(Color.BLACK);
+    private Position initialPosition;
 
     public Turtle(Position position, Area area, Image icon) {
         setPosition(position);
+        setInitialPosition(position);
         this.area = area;
         this.icon = icon;
+    }
+
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
+    private void setInitialPosition(Position initialPosition) {
+        this.initialPosition = initialPosition;
     }
 
     public Position getPosition() {

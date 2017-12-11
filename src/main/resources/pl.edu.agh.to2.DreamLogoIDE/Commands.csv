@@ -14,3 +14,6 @@ pu,pl.edu.agh.to2.DreamLogoIDE.command.PuCommand,0
 pod,pl.edu.agh.to2.DreamLogoIDE.command.PuCommand,0
 pd,pl.edu.agh.to2.DreamLogoIDE.command.PdCommand,0
 opu,pl.edu.agh.to2.DreamLogoIDE.command.PdCommand,0
+cs,pl.edu.agh.to2.DreamLogoIDE.command.CsCommand,0
+gb,pl.edu.agh.to2.DreamLogoIDE.command.GbCommand,0
+wróć,pl.edu.agh.to2.DreamLogoIDE.command.GbCommand,0

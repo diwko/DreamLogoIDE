@@ -14,6 +14,8 @@ DreamLogoIDE
 >- **st**: Show turtle
 >- **pd**: Pen down (turtle draws after moving)
 >- **pu**: Pen up (turtle moves without drawing)
+>- **cs**: Clear screen (turtle returns to its initial position)
+>- **gb**: Go back to turtle's initial position (without cleaning the screen)
 
 
 **Aliases**
@@ -25,7 +27,7 @@ DreamLogoIDE
 >- st = **pż**
 >- pu = **pod**
 >- pd = **opu**
-
+>- gb = **wróć**
 
 
 Check it!
