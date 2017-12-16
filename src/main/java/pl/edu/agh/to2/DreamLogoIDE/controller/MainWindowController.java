@@ -1,5 +1,6 @@
 package pl.edu.agh.to2.DreamLogoIDE.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
@@ -18,8 +19,13 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParser;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParserImp;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.stream.Stream;
 
 
 public class MainWindowController {
@@ -46,6 +52,8 @@ public class MainWindowController {
     private Turtle turtle;
     private ShapeDrawer shapeDrawer;
     private TurtleDrawer turtleDrawer;
+    private LogoAppController logoAppController;
+    private File currentFile;
 
 
     public void initialize() {
@@ -79,6 +87,10 @@ public class MainWindowController {
         });
     }
 
+    public void setLogoAppController(LogoAppController logoAppController) {
+        this.logoAppController = logoAppController;
+    }
+
     @FXML
     public void executeCommand() {
         errorMessageField.clear();
@@ -92,6 +104,57 @@ public class MainWindowController {
         }
     }
 
+    @FXML
+    private void handleOpenFileAction(final ActionEvent event) {
+        try {
+            File f = logoAppController.showFileChooserAndReturnFile();
+            Stream<String> stream = Files.lines(Paths.get(f.getAbsolutePath()));
+            stream.forEach(s -> executeCommandFile(s));
+
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleSaveFileAction(final ActionEvent event) {
+        if(this.currentFile == null)
+            this.currentFile = logoAppController.showFileChooserAndSaveFile();
+        try {
+            FileWriter writer = new FileWriter(currentFile);
+            for(Command command : commandRegistry.getCommandStack())
+                writer.write(command.getText() + "\n");
+            writer.close();
+
+        } catch (Exception e) {
+            return;
+        }
+    }
+
+    @FXML
+    private void handleSaveFileAsAction(final ActionEvent event) {
+        try {
+            this.currentFile = logoAppController.showFileChooserAndSaveFile();
+            FileWriter writer = new FileWriter(currentFile);
+            for(Command command : commandRegistry.getCommandStack())
+                writer.write(command.getText() + "\n");
+            writer.close();
+        } catch(Exception e) {
+            return;
+        }
+    }
+
+    @FXML
+    private void handleNewFileAction(final ActionEvent event) {
+        try {
+            this.currentFile = logoAppController.showFileChooserAndSaveFile();
+            executeCommandFile("cs");
+            initialize();
+        } catch(Exception e) {
+            return;
+        }
+    }
+
     public void undoCommand() {
         commandRegistry.undo();
     }
@@ -102,5 +165,14 @@ public class MainWindowController {
 
     private void setErrorMessage(String text) {
         errorMessageField.setText(text);
+    }
+
+    private void executeCommandFile(String cmd) {
+        try {
+            Command command = commmandParser.getCommand(cmd, turtle, shapeDrawer);
+            commandRegistry.executeCommand(command);
+        } catch (ParseException | IllegalStateException e) {
+            setErrorMessage(e.getMessage());
+        }
     }
 }
