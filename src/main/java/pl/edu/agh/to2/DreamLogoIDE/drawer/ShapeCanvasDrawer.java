@@ -17,6 +17,7 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
     private Canvas currentCanvas;
     private GraphicsContext graphicsContext;
     private Stack<WritableImage> prevSnapshots = new Stack<>();
+    private boolean drawingHistory = true;
 
     public ShapeCanvasDrawer(Turtle turtle, Canvas canvas) {
         this.turtle = turtle;
@@ -54,8 +55,13 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
         graphicsContext.strokeOval(a.getX(), a.getY(), r, r);
     }
 
+    public void setDrawingHistory(boolean enable) {
+        drawingHistory = enable;
+    }
+
     private void saveSnapshot() {
-        prevSnapshots.push(currentCanvas.snapshot(new SnapshotParameters(), null));
+        if (drawingHistory)
+            prevSnapshots.push(currentCanvas.snapshot(new SnapshotParameters(), null));
     }
 
     private ChangeListener<Color> penColorChangeListener() {

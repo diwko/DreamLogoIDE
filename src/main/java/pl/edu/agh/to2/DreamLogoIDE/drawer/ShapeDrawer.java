@@ -10,4 +10,6 @@ public interface ShapeDrawer {
     void drawLine(Position a, Position b);
 
     void drawCircle(Position a, double r);
+
+    void setDrawingHistory(boolean enable);
 }
