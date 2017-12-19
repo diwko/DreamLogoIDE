@@ -18,6 +18,7 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParser;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParserImp;
+import pl.edu.agh.to2.DreamLogoIDE.parser.CommandProviderImp;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,7 +59,8 @@ public class MainWindowController {
 
     public void initialize() {
         try {
-            commmandParser = new CommandParserImp("pl.edu.agh.to2.DreamLogoIDE/Commands.csv");
+
+            commmandParser = new CommandParserImp(new CommandProviderImp("pl.edu.agh.to2.DreamLogoIDE/Commands.csv"));
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
@@ -95,8 +97,8 @@ public class MainWindowController {
     public void executeCommand() {
         errorMessageField.clear();
         try {
-            Command command = commmandParser.getCommand(commandInputField.getText(), turtle, shapeDrawer);
-            commandRegistry.executeCommand(command);
+            Command command = commmandParser.getCommand(commandInputField.getText());
+            commandRegistry.executeCommand(command, turtle, shapeDrawer);
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
         } finally {
@@ -169,8 +171,8 @@ public class MainWindowController {
 
     private void executeCommandFile(String cmd) {
         try {
-            Command command = commmandParser.getCommand(cmd, turtle, shapeDrawer);
-            commandRegistry.executeCommand(command);
+            Command command = commmandParser.getCommand(cmd);
+            commandRegistry.executeCommand(command, turtle, shapeDrawer);
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
         }
