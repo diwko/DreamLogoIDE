@@ -19,7 +19,7 @@ public class CommandParserImp implements CommandParser {
 
     @Override
     public Command getCommand(String textCommand) throws IllegalArgumentException, ParseException {
-        Queue<String> args = new LinkedList<>(Arrays.asList(textCommand.split("\\s+")));
+        Queue<String> args = new LinkedList<>(Arrays.asList(textCommand.toLowerCase().split("\\s+")));
         Command command = getCommand(args);
 
         if (command instanceof RepeatCommand) {
@@ -30,6 +30,7 @@ public class CommandParserImp implements CommandParser {
 
     private Command getCommand(Queue<String> args) throws ParseException {
         String keyword = args.peek();
+        System.out.println(keyword);
         if (!commandProvider.isSupported(keyword))
             throw new ParseException("Illegal command", 0);
 
