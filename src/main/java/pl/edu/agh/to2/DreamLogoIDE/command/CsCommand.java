@@ -5,23 +5,25 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
+import java.util.Stack;
 
 public class CsCommand extends Command {
-    private Position beforeCleaning;
-    public CsCommand(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        super(arguments, turtle, shapeDrawer);
+    private Stack<Position> prevPositionsStack = new Stack<>();
+
+    public CsCommand(String[] arguments) throws ParseException {
+        super(arguments);
     }
 
     @Override
-    public void execute() {
-        beforeCleaning = turtle.getPosition();
+    public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        prevPositionsStack.push(turtle.getPosition());
         turtle.setPosition(turtle.getInitialPosition());
         shapeDrawer.clearCanvas();
     }
 
     @Override
-    public void undo() {
+    public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        turtle.setPosition(prevPositionsStack.pop());
         shapeDrawer.undoDrawing();
-        turtle.setPosition(beforeCleaning);
     }
 }

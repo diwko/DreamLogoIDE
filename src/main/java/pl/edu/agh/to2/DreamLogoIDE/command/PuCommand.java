@@ -4,22 +4,23 @@ import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
+import java.util.Stack;
 
 public class PuCommand extends Command {
-    private boolean penDown;
-    public PuCommand(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        super(arguments, turtle, shapeDrawer);
-        penDown = turtle.isPenDown();
+    private Stack<Boolean> prevPenState = new Stack<>();
+
+    public PuCommand(String[] arguments) throws ParseException {
+        super(arguments);
     }
 
     @Override
-    public void execute() {
+    public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        prevPenState.push(turtle.isPenDown());
         turtle.setPenDown(false);
     }
 
     @Override
-    public void undo() {
-        if (!penDown)
-            turtle.setPenDown(true);
+    public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        turtle.setPenDown(prevPenState.pop());
     }
 }

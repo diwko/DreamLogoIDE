@@ -7,13 +7,9 @@ import java.text.ParseException;
 
 public abstract class Command {
     protected final String[] arguments;
-    protected Turtle turtle;
-    protected ShapeDrawer shapeDrawer;
 
-    public Command(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
+    public Command(String[] arguments) throws ParseException {
         this.arguments = arguments;
-        this.turtle = turtle;
-        this.shapeDrawer = shapeDrawer;
     }
 
     public String getText() {
@@ -23,19 +19,11 @@ public abstract class Command {
         return builder.toString();
     }
 
-    public Turtle getTurtle() {
-        return turtle;
-    }
+    public abstract void execute(Turtle turtle, ShapeDrawer shapeDrawer);
 
-    public ShapeDrawer getShapeDrawer() {
-        return shapeDrawer;
-    }
+    public abstract void undo(Turtle turtle, ShapeDrawer shapeDrawer);
 
-    public abstract void execute();
-
-    public abstract void undo();
-
-    public void redo() {
-        execute();
+    public void redo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        execute(turtle, shapeDrawer);
     }
 }

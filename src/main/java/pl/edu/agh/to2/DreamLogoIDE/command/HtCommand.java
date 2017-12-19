@@ -4,23 +4,23 @@ import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
+import java.util.Stack;
 
 public class HtCommand extends Command {
-    private boolean wasHidden;
+    private Stack<Boolean> prevHiddenState = new Stack<>();
 
-    public HtCommand(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        super(arguments, turtle, shapeDrawer);
-        wasHidden = turtle.isHidden();
+    public HtCommand(String[] arguments) throws ParseException {
+        super(arguments);
     }
 
     @Override
-    public void execute() {
-        turtle.setHidden(true);
+    public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        prevHiddenState.push(turtle.isHidden());
+        turtle.setHidden(false);
     }
 
     @Override
-    public void undo() {
-        if (!wasHidden)
-            turtle.setHidden(false);
+    public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        turtle.setHidden(prevHiddenState.pop());
     }
 }

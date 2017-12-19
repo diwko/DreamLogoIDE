@@ -5,21 +5,23 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
+import java.util.Stack;
 
 public class GbCommand extends Command {
-    private Position beforeReturning;
-    public GbCommand(String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        super(arguments, turtle, shapeDrawer);
+    private Stack<Position> prevPositionsStack = new Stack<>();
+
+    public GbCommand(String[] arguments) throws ParseException {
+        super(arguments);
     }
 
     @Override
-    public void execute() {
-        beforeReturning = turtle.getPosition();
+    public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        prevPositionsStack.push(turtle.getPosition());
         turtle.setPosition(turtle.getInitialPosition());
     }
 
     @Override
-    public void undo() {
-        turtle.setPosition(beforeReturning);
+    public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        turtle.setPosition(prevPositionsStack.pop());
     }
 }
