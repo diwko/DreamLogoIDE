@@ -1,84 +1,54 @@
 package pl.edu.agh.to2.DreamLogoIDE.parser;
 
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
-import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
-import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
+import pl.edu.agh.to2.DreamLogoIDE.command.RepeatCommand;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 
 public class CommandParserImp implements CommandParser {
-    private Map<String, String> commands = new HashMap<>();
-    private Map<String, Integer> argumentsNumber = new HashMap<>();
+    private CommandProvider commandProvider;
 
-    public CommandParserImp(String commandsFile) throws IOException {
-        loadCommandsFromFile(commandsFile);
+    public CommandParserImp(CommandProvider commandProvider) throws IOException {
+        this.commandProvider = commandProvider;
     }
 
     @Override
-    public Command getCommand(String command, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        String converted = command.trim().toLowerCase().replaceAll("\\s+", " ");
-        String[] splitted = converted.split(" ");
+    public Command getCommand(String textCommand) throws IllegalArgumentException, ParseException {
+        Queue<String> args = new LinkedList<>(Arrays.asList(textCommand.split("\\s+")));
+        Command command = getCommand(args);
 
-        if (!commands.containsKey(splitted[0]))
-            throw new ParseException("Command not found: " + splitted[0], 0);
-
-        int argsNumber = argumentsNumber.get(splitted[0]);
-        if ((splitted.length - 1) != argsNumber)
-            throw new ParseException("Incorrect number of arguments. Correct number: " + argsNumber, 0);
-
-        String className = commands.get(splitted[0]);
-        return getCommandInstance(className, splitted, turtle, shapeDrawer);
-    }
-
-    private Command getCommandInstance(String className, String[] arguments, Turtle turtle, ShapeDrawer shapeDrawer) throws ParseException {
-        try {
-            Class<?> clazz = Class.forName(className);
-            Constructor<?> constructor = clazz.getConstructor(String[].class, Turtle.class, ShapeDrawer.class);
-            return (Command) constructor.newInstance(arguments, turtle, shapeDrawer);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                NoSuchMethodException | ClassNotFoundException e) {
-            throw new ParseException("Not implemented", 0);
+        if (command instanceof RepeatCommand) {
+            getRepeatCommand((RepeatCommand) command, args);
         }
+        return command;
     }
 
-    private void loadCommandsFromFile(String path) throws IOException {
-        try (InputStream in = getClass().getResourceAsStream("/" + path)) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+    private Command getCommand(Queue<String> args) throws ParseException {
+        String keyword = args.peek();
+        if (!commandProvider.isSupported(keyword))
+            throw new ParseException("Illegal command", 0);
 
-            Stream<String> lines = br.lines();
-            lines.forEach(line -> {
-                try {
-                    parseLine(line);
-                } catch (ParseException e) {
-                    //Skip line
-                }
-            });
-        } catch (IOException e) {
-            throw new IOException("Commands File not found");
-        }
+        int argsNumber = commandProvider.getCommandArgumentsNumber(keyword);
+        String[] commandArgs = new String[argsNumber + 1];
+        for (int i = 0; i < argsNumber + 1; i++)
+            commandArgs[i] = args.remove();
+
+        return commandProvider.getCommand(commandArgs);
     }
 
-    private void parseLine(String line) throws ParseException {
-        String[] splitted = line.split(",");
-        if (splitted.length != 3)
-            throw new ParseException("Command line have to many arguments: " + line, 0);
+    private Command getRepeatCommand(RepeatCommand command, Queue<String> args) throws ParseException {
+        if (!args.remove().equals("["))
+            throw new ParseException("Not found '['", 0);
 
-        commands.put(splitted[0], splitted[1]);
-        try {
-            argumentsNumber.put(splitted[0], Integer.parseInt(splitted[2]));
-        } catch (NumberFormatException e) {
-            throw new ParseException("Command line third value must be a integer", 0);
-        }
+        while (!args.peek().equals("]"))
+            command.addCommand(getCommand(args));
+
+        args.remove();
+        return command;
     }
-
 }
