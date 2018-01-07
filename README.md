@@ -16,6 +16,7 @@ DreamLogoIDE
 >- **pu**: Pen up (turtle moves without drawing)
 >- **cs**: Clear screen (turtle returns to its initial position)
 >- **gb**: Go back to turtle's initial position (without cleaning the screen)
+>- **repeat n [ cmd cmd ... ]**: repeat commands n times
 
 
 **Aliases**
@@ -28,6 +29,8 @@ DreamLogoIDE
 >- pu = **pod**
 >- pd = **opu**
 >- gb = **wróć**
+
+**File Operations**
 
 
 Check it!
