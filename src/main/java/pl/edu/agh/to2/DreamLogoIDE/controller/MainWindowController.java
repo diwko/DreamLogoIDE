@@ -18,7 +18,7 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParser;
 import pl.edu.agh.to2.DreamLogoIDE.parser.CommandParserImp;
-import pl.edu.agh.to2.DreamLogoIDE.parser.CommandProviderImp;
+import pl.edu.agh.to2.DreamLogoIDE.parser.JsonCommandProvider;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -59,8 +59,7 @@ public class MainWindowController {
 
     public void initialize() {
         try {
-
-            commmandParser = new CommandParserImp(new CommandProviderImp("pl.edu.agh.to2.DreamLogoIDE/Commands.csv"));
+            commmandParser = new CommandParserImp(new JsonCommandProvider("pl.edu.agh.to2.DreamLogoIDE/commands.json"));
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
