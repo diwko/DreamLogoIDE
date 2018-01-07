@@ -20,17 +20,20 @@ public class CommandParserImp implements CommandParser {
     @Override
     public Command getCommand(String textCommand) throws IllegalArgumentException, ParseException {
         Queue<String> args = new LinkedList<>(Arrays.asList(textCommand.toLowerCase().split("\\s+")));
-        Command command = getCommand(args);
-
-        if (command instanceof RepeatCommand) {
-            getRepeatCommand((RepeatCommand) command, args);
-        }
-        return command;
+        return getCommand(args);
     }
 
     private Command getCommand(Queue<String> args) throws ParseException {
+        Command command = commandProvider.getCommand(getCommandArgs(args));
+
+        if (command instanceof RepeatCommand)
+            command = getRepeatCommand((RepeatCommand) command, args);
+
+        return command;
+    }
+
+    private String[] getCommandArgs(Queue<String> args) throws ParseException {
         String keyword = args.peek();
-        System.out.println(keyword);
         if (!commandProvider.isSupported(keyword))
             throw new ParseException("Illegal command", 0);
 
@@ -39,7 +42,7 @@ public class CommandParserImp implements CommandParser {
         for (int i = 0; i < argsNumber + 1; i++)
             commandArgs[i] = args.remove();
 
-        return commandProvider.getCommand(commandArgs);
+        return commandArgs;
     }
 
     private Command getRepeatCommand(RepeatCommand command, Queue<String> args) throws ParseException {
