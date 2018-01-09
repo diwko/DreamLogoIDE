@@ -97,7 +97,10 @@ public class MainWindowController {
         errorMessageField.clear();
         try {
             Command command = commmandParser.getCommand(commandInputField.getText());
-            commandRegistry.executeCommand(command, turtle, shapeDrawer);
+            if (command != null)
+                commandRegistry.executeCommand(command, turtle, shapeDrawer);
+            else
+                setErrorMessage("Not ended command");
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
         } finally {
@@ -107,13 +110,16 @@ public class MainWindowController {
 
     @FXML
     private void handleOpenFileAction(final ActionEvent event) {
+        File f = logoAppController.showFileChooserAndReturnFile();
+        if (f == null)
+            return;
+
         try {
-            File f = logoAppController.showFileChooserAndReturnFile();
             Stream<String> stream = Files.lines(Paths.get(f.getAbsolutePath()));
             stream.forEach(s -> executeCommandFile(s));
 
-        } catch(Exception e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            setErrorMessage(e.getMessage());
         }
     }
 
