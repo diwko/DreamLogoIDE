@@ -7,10 +7,10 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserCommand extends Command {
+public class ProcedureCommand extends Command {
     private List<Command> commands = new ArrayList<>();
 
-    public UserCommand(String[] arguments) throws ParseException {
+    public ProcedureCommand(String[] arguments) throws ParseException {
         super(arguments);
     }
 
@@ -25,7 +25,7 @@ public class UserCommand extends Command {
             builder.append(arg.toUpperCase()).append(" ");
         builder.append("\n");
         for (Command command : commands)
-            builder.append(command.getText()).append("\n");
+            builder.append("\t").append(command.getText()).append("\n");
         builder.append("END");
 
         return builder.toString();
