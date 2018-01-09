@@ -5,9 +5,8 @@
       "np"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.FdCommand",
-    "argsNumber": [
-      1
-    ]
+    "argsNumber": 1
+
   },
   {
     "keywords": [
@@ -15,9 +14,7 @@
       "pw"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.RtCommand",
-    "argsNumber": [
-      1
-    ]
+    "argsNumber": 1
   },
   {
     "keywords": [
@@ -25,9 +22,7 @@
       "lw"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.LtCommand",
-    "argsNumber": [
-      1
-    ]
+    "argsNumber": 1
   },
   {
     "keywords": [
@@ -35,9 +30,7 @@
       "ws"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.BkCommand",
-    "argsNumber": [
-      1
-    ]
+    "argsNumber": 1
   },
   {
     "keywords": [
@@ -45,9 +38,7 @@
       "pż"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.StCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
@@ -55,9 +46,7 @@
       "sż"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.HtCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
@@ -65,9 +54,7 @@
       "pod"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.PuCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
@@ -75,18 +62,14 @@
       "opu"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.PdCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
       "cs"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.CsCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
@@ -94,9 +77,7 @@
       "wróć"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.GbCommand",
-    "argsNumber": [
-      0
-    ]
+    "argsNumber": 0
   },
   {
     "keywords": [
@@ -105,8 +86,16 @@
       "powtórz"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.RepeatCommand",
-    "argsNumber": [
-      1
-    ]
+    "argsNumber": 1
+  },
+  {
+    "keywords": [
+      "to",
+      "oto"
+    ],
+    "className": "pl.edu.agh.to2.DreamLogoIDE.command.ProcedureDefinitionCommand",
+    "argsNumber": 1
   }
+
+
 ]
