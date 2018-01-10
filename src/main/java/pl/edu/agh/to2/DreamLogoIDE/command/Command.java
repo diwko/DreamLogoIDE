@@ -1,32 +1,29 @@
 package pl.edu.agh.to2.DreamLogoIDE.command;
 
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
 
 public abstract class Command {
     protected final String[] arguments;
-    protected Turtle turtle;
 
-    public Command(String[] arguments, Turtle turtle) throws ParseException {
+    public Command(String[] arguments) throws ParseException {
         this.arguments = arguments;
-        this.turtle = turtle;
     }
 
     public String getText() {
         StringBuilder builder = new StringBuilder();
         for (String arg : arguments)
-            builder.append(arg.toUpperCase() + " ");
+            builder.append(arg.toUpperCase()).append(" ");
         return builder.toString();
     }
 
-    public Turtle getTurtle() {
-        return turtle;
+    public abstract void execute(Turtle turtle, ShapeDrawer shapeDrawer);
+
+    public abstract void undo(Turtle turtle, ShapeDrawer shapeDrawer);
+
+    public void redo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        execute(turtle, shapeDrawer);
     }
-
-    public abstract void execute();
-
-    public abstract void undo();
-
-    public abstract void redo();
 }
