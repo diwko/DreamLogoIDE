@@ -7,11 +7,11 @@ import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 import java.text.ParseException;
 import java.util.Stack;
 
-public class RtCommand extends Command {
+public class LtCommand extends Command {
     private double angle;
     private Stack<Position> prevPositionsStack = new Stack<>();
 
-    public RtCommand(String[] arguments) throws ParseException {
+    public LtCommand(String[] arguments) throws ParseException {
         super(arguments);
         try {
             angle = Double.parseDouble(arguments[1]);
@@ -23,7 +23,7 @@ public class RtCommand extends Command {
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
         prevPositionsStack.push(turtle.getPosition());
-        turtle.rotate(angle);
+        turtle.rotate(-angle);
     }
 
     @Override

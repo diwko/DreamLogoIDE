@@ -1,14 +1,18 @@
 package pl.edu.agh.to2.DreamLogoIDE.command;
 
+import pl.edu.agh.to2.DreamLogoIDE.drawer.ShapeDrawer;
+import pl.edu.agh.to2.DreamLogoIDE.model.Position;
 import pl.edu.agh.to2.DreamLogoIDE.model.Turtle;
 
 import java.text.ParseException;
+import java.util.Stack;
 
 public class FdCommand extends Command {
     private double distance;
+    private Stack<Position> prevPositionsStack = new Stack<>();
 
-    public FdCommand(String[] arguments, Turtle turtle) throws ParseException {
-        super(arguments, turtle);
+    public FdCommand(String[] arguments) throws ParseException {
+        super(arguments);
 
         try {
             distance = Double.parseDouble(arguments[1]);
@@ -18,17 +22,15 @@ public class FdCommand extends Command {
     }
 
     @Override
-    public void execute() throws IllegalStateException {
+    public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        prevPositionsStack.push(turtle.getPosition());
         turtle.move(distance);
+        shapeDrawer.drawLine(prevPositionsStack.peek(), turtle.getPosition());
     }
 
     @Override
-    public void undo() {
-//      TODO
-    }
-
-    @Override
-    public void redo() {
-//      TODO
+    public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        turtle.setPosition(prevPositionsStack.pop());
+        shapeDrawer.undoDrawing();
     }
 }

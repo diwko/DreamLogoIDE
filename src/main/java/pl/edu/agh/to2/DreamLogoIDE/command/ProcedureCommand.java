@@ -7,18 +7,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RepeatCommand extends Command {
-    private int n;
+public class ProcedureCommand extends Command {
     private List<Command> commands = new ArrayList<>();
 
-    public RepeatCommand(String[] arguments) throws ParseException {
+    public ProcedureCommand(String[] arguments) throws ParseException {
         super(arguments);
-
-        try {
-            n = Integer.valueOf(arguments[1]);
-        } catch (NumberFormatException e) {
-            throw new ParseException("Number of iterations must be an INTEGER", 0);
-        }
     }
 
     public void addCommand(Command command) {
@@ -30,24 +23,22 @@ public class RepeatCommand extends Command {
         StringBuilder builder = new StringBuilder();
         for (String arg : arguments)
             builder.append(arg.toUpperCase()).append(" ");
-        builder.append("[ ");
+        builder.append("\n");
         for (Command command : commands)
-            builder.append(command.getText());
-        builder.append("]");
+            builder.append("\t").append(command.getText()).append("\n");
+        builder.append("END");
 
         return builder.toString();
     }
 
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
-        for (int i = 0; i < n; i++)
-            commands.forEach(c -> c.execute(turtle, shapeDrawer));
+        commands.forEach(c -> c.execute(turtle, shapeDrawer));
     }
 
     @Override
     public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
-        for (int i = 0; i < n; i++)
-            for (int j = commands.size() - 1; j >= 0; j--)
-                commands.get(j).undo(turtle, shapeDrawer);
+        for (int i = commands.size() - 1; i >= 0; i--)
+            commands.get(i).undo(turtle, shapeDrawer);
     }
 }

@@ -1,23 +1,32 @@
 package pl.edu.agh.to2.DreamLogoIDE.model;
 
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 public class Turtle {
     private ObjectProperty<Position> position = new SimpleObjectProperty<>();
     private Area area;
-
-    private boolean hidden = false;
+    private Image icon;
+    private BooleanProperty hidden = new SimpleBooleanProperty(false);
     private boolean penDown = true;
     private DoubleProperty penSize = new SimpleDoubleProperty(1.0);
     private ObjectProperty<Color> penColor = new SimpleObjectProperty<>(Color.BLACK);
+    private Position initialPosition;
 
-    public Turtle(Position position, Area area) {
+    public Turtle(Position position, Area area, Image icon) {
         setPosition(position);
+        setInitialPosition(position);
         this.area = area;
+        this.icon = icon;
+    }
+
+    public Position getInitialPosition() {
+        return initialPosition;
+    }
+
+    private void setInitialPosition(Position initialPosition) {
+        this.initialPosition = initialPosition;
     }
 
     public Position getPosition() {
@@ -40,12 +49,20 @@ public class Turtle {
         this.area = area;
     }
 
+    public Image getIcon() {
+        return icon;
+    }
+
     public boolean isHidden() {
-        return hidden;
+        return hidden.getValue();
     }
 
     public void setHidden(boolean hidden) {
-        this.hidden = hidden;
+        this.hidden.setValue(hidden);
+    }
+
+    public BooleanProperty isHiddenProperty() {
+        return hidden;
     }
 
     public boolean isPenDown() {
