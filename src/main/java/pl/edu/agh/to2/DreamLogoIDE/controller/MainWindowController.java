@@ -7,6 +7,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
 import pl.edu.agh.to2.DreamLogoIDE.command.CommandRegistry;
@@ -58,6 +60,7 @@ public class MainWindowController {
     private TurtleDrawer turtleDrawer;
     private LogoAppController logoAppController;
     private File currentFile;
+    private int commandHistoryIndex;
 
 
     public void initialize() {
@@ -66,6 +69,12 @@ public class MainWindowController {
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
+
+        commandHistoryIndex = -1;
+
+        mainWindow.setOnKeyTyped(this::handleKeyEvent);
+
+        commandHistoryView.setOnMouseClicked(this::handleHistoryListMouseEvent);
 
         commandRegistry = new CommandRegistry();
 
@@ -118,11 +127,11 @@ public class MainWindowController {
 
     @FXML
     private void handleSaveFileAction(final ActionEvent event) {
-        if(this.currentFile == null)
+        if (this.currentFile == null)
             this.currentFile = logoAppController.showFileChooserAndSaveFile();
         try {
             FileWriter writer = new FileWriter(currentFile);
-            for(Command command : commandRegistry.getCommandStack())
+            for (Command command : commandRegistry.getCommandStack())
                 writer.write(command.getText() + "\n");
             writer.close();
 
@@ -136,10 +145,10 @@ public class MainWindowController {
         try {
             this.currentFile = logoAppController.showFileChooserAndSaveFile();
             FileWriter writer = new FileWriter(currentFile);
-            for(Command command : commandRegistry.getCommandStack())
+            for (Command command : commandRegistry.getCommandStack())
                 writer.write(command.getText() + "\n");
             writer.close();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return;
         }
     }
@@ -150,8 +159,39 @@ public class MainWindowController {
             this.currentFile = logoAppController.showFileChooserAndSaveFile();
             executeCommand("cs");
             initialize();
-        } catch(Exception e) {
+        } catch (Exception e) {
             return;
+        }
+    }
+
+    private void handleHistoryListMouseEvent(MouseEvent event) {
+        Command selection = commandHistoryView.getSelectionModel().getSelectedItem();
+        if (selection != null) {
+            commandInputField.setText(selection.getText());
+        }
+    }
+
+    private void handleKeyEvent(KeyEvent event) {
+        if (commandHistoryIndex == -1) commandHistoryIndex = commandHistoryView.getItems().size() - 1;
+        switch (event.getCode()) {
+            case ENTER:
+                executeCommand();
+                break;
+            case UP:
+                if (commandHistoryIndex > 0)
+                    commandInputField.setText(commandHistoryView.getItems().get(commandHistoryIndex).getText());
+                break;
+            case DOWN:
+                if (commandHistoryIndex < commandHistoryView.getItems().size())
+                    commandInputField.setText(commandHistoryView.getItems().get(commandHistoryIndex).getText());
+                else
+                    commandInputField.setText("");
+                break;
+            case ESCAPE:
+                logoAppController.close();
+                break;
+            default:
+                break;
         }
     }
 
@@ -182,4 +222,5 @@ public class MainWindowController {
     private void executeCommands(List<String> lines) {
         lines.forEach(this::executeCommand);
     }
+
 }

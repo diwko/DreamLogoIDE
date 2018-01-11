@@ -43,7 +43,7 @@
     <left>
         <VBox alignment="BOTTOM_CENTER" prefWidth="410.0" prefHeight="610" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="commandHistoryView" disable="true" VBox.vgrow="ALWAYS"/>
+                <ListView fx:id="commandHistoryView" VBox.vgrow="ALWAYS"/>
                 <TextField fx:id="commandInputField" onAction="#executeCommand" VBox.vgrow="NEVER"/>
                 <TextField fx:id="errorMessageField" disable="true" VBox.vgrow="NEVER"/>
             </children>
