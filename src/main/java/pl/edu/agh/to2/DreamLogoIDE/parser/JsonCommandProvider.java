@@ -50,8 +50,12 @@ public class JsonCommandProvider implements CommandProvider {
     }
 
     @Override
-    public int getCommandArgumentsNumber(String keyword) {
-        return commandsData.get(keyword).argsNumber;
+    public int getCommandArgumentsNumber(String keyword) throws IllegalArgumentException {
+        try {
+            return commandsData.get(keyword).argsNumber;
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Command not supported");
+        }
     }
 
     private void loadCommandsFromJsonFile(String path) throws IOException {

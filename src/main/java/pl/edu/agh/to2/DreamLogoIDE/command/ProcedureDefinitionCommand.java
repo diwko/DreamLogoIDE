@@ -23,6 +23,7 @@ public class ProcedureDefinitionCommand extends Command {
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
         isDefined = true;
+        replaceLocalVariables();
     }
 
     @Override
@@ -60,6 +61,15 @@ public class ProcedureDefinitionCommand extends Command {
         return isDefined;
     }
 
+    public List<String> getProcedureDefinitionBody(String[] params) throws ParseException {
+        List<String> commandsCopy = new ArrayList<>(commands);
+
+        for (int lineNum = 0; lineNum < commandsCopy.size(); lineNum++)
+            commandsCopy.set(lineNum, replaceArgsWithParams(commandsCopy.get(lineNum), params));
+
+        return commandsCopy;
+    }
+
     private void addLocalVariable(String line) throws ParseException {
         String[] splitted = line.split("\\s+");
         if (splitted.length != 3 || !splitted[1].startsWith("\""))
@@ -70,23 +80,23 @@ public class ProcedureDefinitionCommand extends Command {
         localVariablesStartLine.put(localVarName, commands.size());
     }
 
-    public Iterable<String> getProcedure(String... values) throws ParseException {
-        if (values.length != args.size())
-            throw new ParseException("Invalid number of arguments", 0);
-
-        List<String> commandsCopy = new ArrayList<>(commands);
-
-        for (int i = 0; i < commandsCopy.size(); i++) {
-            String line = commands.get(i);
-            if (line.contains(":"))
-                for (String arg : args) {
-                    commands.set(i, line.replace(arg, values[i]));
-                }
+    private void replaceLocalVariables() {
+        for (int lineNum = 0; lineNum < commands.size(); lineNum++) {
             for (String var : localVariables.keySet()) {
-                if (localVariablesStartLine.get(var) >= i)
-                    commands.set(i, line.replace(var, values[i]));
+                if (localVariablesStartLine.get(var) >= lineNum)
+                    commands.set(lineNum, commands.get(lineNum).replace(var, localVariables.get(var)));
             }
         }
-        return commandsCopy;
+    }
+
+    private String replaceArgsWithParams(String line, String[] params) throws ParseException {
+        if (params.length != args.size() + 1)
+            throw new ParseException("Invalid number of arguments", 0);
+
+        if (line.contains(":"))
+            for (int argNum = 0; argNum < args.size(); argNum++)
+                line = line.replace(args.get(argNum), params[argNum + 1]);
+
+        return line;
     }
 }

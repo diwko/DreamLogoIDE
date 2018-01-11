@@ -1,29 +1,24 @@
 package pl.edu.agh.to2.DreamLogoIDE.parser;
 
 import pl.edu.agh.to2.DreamLogoIDE.command.Command;
-import pl.edu.agh.to2.DreamLogoIDE.command.ProcedureCommand;
 import pl.edu.agh.to2.DreamLogoIDE.command.ProcedureDefinitionCommand;
 import pl.edu.agh.to2.DreamLogoIDE.command.RepeatCommand;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 
 public class CommandParserImp implements CommandParser {
-    private CommandProvider commandProvider;
-    private Environment environment = new Environment();
+    private Environment environment;
     private ProcedureDefinitionCommand notEndedDefinition = null;
 
     public CommandParserImp(CommandProvider commandProvider) throws IOException {
-        this.commandProvider = commandProvider;
+        this.environment = new Environment(commandProvider, this);
     }
 
     @Override
-    public Command getCommand(String textCommand) throws IllegalArgumentException, ParseException {
+    public Optional<Command> getCommand(String textCommand) throws IllegalArgumentException, ParseException {
         textCommand = textCommand.toLowerCase().trim();
 
         if (notEndedDefinition != null)
@@ -34,71 +29,35 @@ public class CommandParserImp implements CommandParser {
         return getCommand(args);
     }
 
-    private Command getCommand(Queue<String> args) throws ParseException {
-        Command command;
-        if (commandProvider.isSupported(args.peek())) {
-            command = getBasicCommand(args);
-        } else if (environment.isDefined(args.peek())) {
-            command = getUserCommand(args);
-        } else
-            throw new ParseException("Command not supprted", 0);
-
-        return command;
-    }
-
-    private Command getBasicCommand(Queue<String> args) throws ParseException {
-        Command command = commandProvider.getCommand(getCommandArgs(args));
+    private Optional<Command> getCommand(Queue<String> args) throws IllegalArgumentException, ParseException {
+        Command command = environment.getCommand(getCommandArgs(args));
 
         if (command instanceof RepeatCommand)
-            command = getRepeatCommand((RepeatCommand) command, args);
-        else if (command instanceof ProcedureDefinitionCommand) {
-            if (!args.isEmpty())
-                ((ProcedureDefinitionCommand) command).setCommandArgs(getProcedureDefinitionArgs(args));
-            notEndedDefinition = (ProcedureDefinitionCommand) command;
-            return null;
-        }
-        return command;
-    }
+            return Optional.of(getRepeatCommand((RepeatCommand) command, args));
+        else if (command instanceof ProcedureDefinitionCommand)
+            return getProcedureDefinitionCommand((ProcedureDefinitionCommand) command, args);
 
-    private Command getUserCommand(Queue<String> args) throws ParseException {
-        ProcedureDefinitionCommand definition = environment.getDefinition(args.peek());
-
-        String[] commandArgs = getCommandArgs(args, definition.getCommandArgumentsNumber());
-        ProcedureCommand procedureCommand = new ProcedureCommand(commandArgs);
-
-        Iterable<String> lines = definition.getProcedure(Arrays.copyOfRange(commandArgs, 1, commandArgs.length));
-        for (String line : lines)
-            procedureCommand.addCommand(getCommand(line));
-
-        return procedureCommand;
+        return Optional.of(command);
     }
 
     private String[] getCommandArgs(Queue<String> args) throws ParseException {
-        String keyword = args.peek();
-        if (!commandProvider.isSupported(keyword))
-            throw new ParseException("Illegal command", 0);
+        int argsNumber = environment.getCommandArgsNumber(args.peek());
 
-        int argsNumber = commandProvider.getCommandArgumentsNumber(keyword);
         String[] commandArgs = new String[argsNumber + 1];
         for (int i = 0; i < argsNumber + 1; i++) {
             if (args.isEmpty())
                 throw new ParseException("Illegal arguments number", 0);
             commandArgs[i] = args.remove();
         }
-
         return commandArgs;
     }
 
-    private String[] getCommandArgs(Queue<String> args, int argsNumber) throws ParseException {
-        String[] commandArgs = new String[argsNumber + 1];
-        for (int i = 0; i < argsNumber + 1; i++)
-            commandArgs[i] = args.remove();
-
-        return commandArgs;
-    }
-
-    private String[] getProcedureDefinitionArgs(Queue<String> args) {
+    private Optional<String[]> getProcedureDefinitionArgs(Queue<String> args) {
         List<String> arguments = new LinkedList<>();
+
+        if (args.isEmpty() || !args.peek().startsWith(":"))
+            return Optional.empty();
+
         while (args.peek().startsWith(":")) {
             arguments.add(args.poll());
             if (args.isEmpty())
@@ -106,7 +65,19 @@ public class CommandParserImp implements CommandParser {
         }
 
         String[] arr = new String[arguments.size()];
-        return arguments.toArray(arr);
+        return Optional.of(arguments.toArray(arr));
+    }
+
+    private Optional<Command> getProcedureDefinitionCommand(ProcedureDefinitionCommand definition, Queue<String> args) throws ParseException {
+        Optional<String[]> arguments = getProcedureDefinitionArgs(args);
+        if (arguments.isPresent())
+            definition.setCommandArgs(arguments.get());
+
+        if (!args.isEmpty())
+            throw new ParseException("Incorrect procedure definition, wrong arguments", 0);
+
+        notEndedDefinition = definition;
+        return Optional.empty();
     }
 
     private Command getRepeatCommand(RepeatCommand command, Queue<String> args) throws ParseException {
@@ -114,21 +85,21 @@ public class CommandParserImp implements CommandParser {
             throw new ParseException("Not found '['", 0);
 
         while (!args.peek().equals("]"))
-            command.addCommand(getCommand(args));
+            getCommand(args).ifPresent(command::addCommand);
 
         args.remove();
         return command;
     }
 
-    private ProcedureDefinitionCommand continueDefinition(String procedureLine) throws ParseException {
+    private Optional<Command> continueDefinition(String procedureLine) throws ParseException {
         if (procedureLine.equals("end") || procedureLine.equals("już")) {
             ProcedureDefinitionCommand def = notEndedDefinition;
             notEndedDefinition = null;
             environment.addDefinition(def);
-            return def;
+            return Optional.of(def);
         }
 
         notEndedDefinition.addTextLine(procedureLine);
-        return null;
+        return Optional.empty();
     }
 }

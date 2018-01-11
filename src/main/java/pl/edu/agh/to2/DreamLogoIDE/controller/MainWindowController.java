@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -95,17 +98,8 @@ public class MainWindowController {
     @FXML
     public void executeCommand() {
         errorMessageField.clear();
-        try {
-            Command command = commmandParser.getCommand(commandInputField.getText());
-            if (command != null)
-                commandRegistry.executeCommand(command, turtle, shapeDrawer);
-            else
-                setErrorMessage("Not ended command");
-        } catch (ParseException | IllegalStateException e) {
-            setErrorMessage(e.getMessage());
-        } finally {
-            commandInputField.clear();
-        }
+        executeCommand(commandInputField.getText());
+        commandInputField.clear();
     }
 
     @FXML
@@ -116,8 +110,7 @@ public class MainWindowController {
 
         try {
             Stream<String> stream = Files.lines(Paths.get(f.getAbsolutePath()));
-            stream.forEach(s -> executeCommandFile(s));
-
+            executeCommands(stream.collect(Collectors.toList()));
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }
@@ -155,7 +148,7 @@ public class MainWindowController {
     private void handleNewFileAction(final ActionEvent event) {
         try {
             this.currentFile = logoAppController.showFileChooserAndSaveFile();
-            executeCommandFile("cs");
+            executeCommand("cs");
             initialize();
         } catch(Exception e) {
             return;
@@ -174,12 +167,19 @@ public class MainWindowController {
         errorMessageField.setText(text);
     }
 
-    private void executeCommandFile(String cmd) {
+    private void executeCommand(String commandLine) {
         try {
-            Command command = commmandParser.getCommand(cmd);
-            commandRegistry.executeCommand(command, turtle, shapeDrawer);
+            Optional<Command> command = commmandParser.getCommand(commandLine);
+            if (command.isPresent())
+                commandRegistry.executeCommand(command.get(), turtle, shapeDrawer);
+            else
+                setErrorMessage("Not ended command");
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
         }
+    }
+
+    private void executeCommands(List<String> lines) {
+        lines.forEach(this::executeCommand);
     }
 }
