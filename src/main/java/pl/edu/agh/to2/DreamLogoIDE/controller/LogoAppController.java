@@ -61,8 +61,4 @@ public class LogoAppController {
             return null;
         }
     }
-
-    void close(){
-        primaryStage.close();
-    }
 }

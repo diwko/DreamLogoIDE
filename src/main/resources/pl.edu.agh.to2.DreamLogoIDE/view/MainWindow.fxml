@@ -7,46 +7,34 @@
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1020.0"
             xmlns="http://javafx.com/javafx/8.0.111"
             fx:controller="pl.edu.agh.to2.DreamLogoIDE.controller.MainWindowController">
-   <top>
-       <MenuBar prefHeight="30.0" BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
+    <top>
+        <MenuBar prefHeight="30.0" BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="File">
                 <MenuItem mnemonicParsing="false" onAction="#handleNewFileAction" text="New File"/>
                 <MenuItem mnemonicParsing="false" onAction="#handleOpenFileAction" text="Open File"/>
                 <MenuItem mnemonicParsing="false" onAction="#handleSaveFileAction" text="Save"/>
                 <MenuItem mnemonicParsing="false" onAction="#handleSaveFileAsAction" text="Save As"/>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
                 <MenuItem mnemonicParsing="false" onAction="#undoCommand" text="Undo"/>
                 <MenuItem mnemonicParsing="false" onAction="#redoCommand" text="Redo"/>
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-                <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" text="About"/>
+            </Menu>
+        </MenuBar>
+    </top>
     <center>
         <Pane style="-fx-background-color: white" BorderPane.alignment="CENTER">
-            <children>
-                <Canvas fx:id="shapesCanvas" height="610.0" width="640.0"/>
-                <Canvas fx:id="turtleCanvas" height="610.0" width="640.0"/>
-            </children>
+            <Canvas fx:id="shapesCanvas" height="610.0" width="640.0"/>
+            <Canvas fx:id="turtleCanvas" height="610.0" width="640.0"/>
         </Pane>
     </center>
     <left>
         <VBox alignment="BOTTOM_CENTER" prefWidth="410.0" prefHeight="610" BorderPane.alignment="CENTER">
-            <children>
-                <ListView fx:id="commandHistoryView" VBox.vgrow="ALWAYS"/>
-                <TextField fx:id="commandInputField" onAction="#executeCommand" VBox.vgrow="NEVER"/>
-                <TextField fx:id="errorMessageField" disable="true" VBox.vgrow="NEVER"/>
-            </children>
+            <ListView fx:id="commandHistoryView" onMouseClicked="#handleHistoryListMouseEvent" VBox.vgrow="ALWAYS"/>
+            <TextField fx:id="commandInputField" onAction="#executeCommand" VBox.vgrow="NEVER"/>
+            <TextField fx:id="errorMessageField" disable="true" VBox.vgrow="NEVER"/>
         </VBox>
     </left>
 
