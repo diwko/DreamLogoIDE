@@ -16,7 +16,7 @@ public class StCommand extends Command {
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
         prevHiddenState.push(turtle.isHidden());
-        turtle.setHidden(true);
+        turtle.setHidden(false);
     }
 
     @Override

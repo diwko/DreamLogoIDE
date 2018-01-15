@@ -16,7 +16,7 @@ public class HtCommand extends Command {
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
         prevHiddenState.push(turtle.isHidden());
-        turtle.setHidden(false);
+        turtle.setHidden(true);
     }
 
     @Override
