@@ -70,6 +70,21 @@ public class ProcedureDefinitionCommand extends Command {
         return commandsCopy;
     }
 
+    @Override
+    public String getText() {
+        StringBuilder builder = new StringBuilder();
+        for (String arg : arguments)
+            builder.append(arg.toUpperCase()).append(" ");
+        for (String arg : args)
+            builder.append(arg.toUpperCase());
+        builder.append("\n");
+        for (String command : commands)
+            builder.append("\t").append(command.toUpperCase()).append("\n");
+        builder.append("END");
+
+        return builder.toString();
+    }
+
     private void addLocalVariable(String line) throws ParseException {
         String[] splitted = line.split("\\s+");
         if (splitted.length != 3 || !splitted[1].startsWith("\""))

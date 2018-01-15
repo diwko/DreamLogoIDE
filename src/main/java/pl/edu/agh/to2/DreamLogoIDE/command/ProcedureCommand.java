@@ -19,19 +19,6 @@ public class ProcedureCommand extends Command {
     }
 
     @Override
-    public String getText() {
-        StringBuilder builder = new StringBuilder();
-        for (String arg : arguments)
-            builder.append(arg.toUpperCase()).append(" ");
-        builder.append("\n");
-        for (Command command : commands)
-            builder.append("\t").append(command.getText()).append("\n");
-        builder.append("END");
-
-        return builder.toString();
-    }
-
-    @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
         commands.forEach(c -> c.execute(turtle, shapeDrawer));
     }
