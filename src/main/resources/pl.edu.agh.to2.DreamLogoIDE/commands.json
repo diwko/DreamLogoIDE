@@ -95,6 +95,14 @@
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.ProcedureDefinitionCommand",
     "argsNumber": 1
+  },
+  {
+    "keywords": [
+      "setpensize",
+      "ugp"
+    ],
+    "className": "pl.edu.agh.to2.DreamLogoIDE.command.SetPenSizeCommand",
+    "argsNumber": 1
   }
 
 
