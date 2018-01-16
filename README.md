@@ -16,7 +16,12 @@ DreamLogoIDE
 >- **pu**: Pen up (turtle moves without drawing)
 >- **cs**: Clear screen (turtle returns to its initial position)
 >- **gb**: Go back to turtle's initial position (without cleaning the screen)
+>- **setPenSize x**: Set pen size to **x**
 >- **repeat n [ cmd cmd ... ]**: repeat commands n times
+>- **to name :arg1 :arg2 ...** <br/>
+    *commands, local variables* <br/>
+    **end** : Procedure with name **name** and arguments
+>- **make "var val** : Make local variable with name **var** and value = **val** 
 
 
 **Aliases**
@@ -29,6 +34,11 @@ DreamLogoIDE
 >- pu = **pod**
 >- pd = **opu**
 >- gb = **wróć**
+>- setPenSize = **ugp**
+>- repeat = **loop** / **powtórz**
+>- to = **oto**
+>- make = **niech**
+
 
 **File Operations**
 
