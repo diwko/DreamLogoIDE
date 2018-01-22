@@ -39,7 +39,7 @@ public class Environment {
             return commandProvider.getCommand(args);
 
         ProcedureDefinitionCommand procedureDef = procedureDefinitions.get(args[0]);
-        if (procedureDef != null)
+        if (procedureDef != null && procedureDef.isDefined())
             return getProcedureCommand(procedureDef, args);
 
         throw new ParseException("Command not defined", 0);
