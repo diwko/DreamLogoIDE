@@ -99,10 +99,20 @@
   {
     "keywords": [
       "setpensize",
+      "setps",
       "ugp"
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.SetPenSizeCommand",
     "argsNumber": 1
+  },
+  {
+    "keywords": [
+      "setpencolor",
+      "setpc",
+      "ukp"
+    ],
+    "className": "pl.edu.agh.to2.DreamLogoIDE.command.SetPenColorCommand",
+    "argsNumber": 3
   }
 
 
