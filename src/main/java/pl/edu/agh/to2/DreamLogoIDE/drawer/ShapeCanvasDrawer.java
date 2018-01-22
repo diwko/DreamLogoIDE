@@ -52,7 +52,7 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
             return;
 
         saveSnapshot();
-        graphicsContext.strokeOval(a.getX(), a.getY(), r, r);
+        graphicsContext.strokeOval(a.getX() - r, a.getY() - r, 2 * r, 2 * r);
     }
 
     public void setDrawingHistory(boolean enable) {
