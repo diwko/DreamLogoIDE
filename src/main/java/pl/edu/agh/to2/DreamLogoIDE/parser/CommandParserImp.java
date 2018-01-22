@@ -19,7 +19,11 @@ public class CommandParserImp implements CommandParser {
 
     @Override
     public Optional<Command> getCommand(String textCommand) throws IllegalArgumentException, ParseException {
-        textCommand = textCommand.toLowerCase().trim();
+        textCommand = textCommand
+                .toLowerCase()
+                .replace("[", " [ ")
+                .replace("]", " ] ")
+                .trim();
 
         if (notEndedDefinition != null)
             return continueDefinition(textCommand);
