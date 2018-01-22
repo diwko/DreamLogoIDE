@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="1020.0"
-            xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns="http://javafx.com/javafx/8.0.121"
             fx:controller="pl.edu.agh.to2.DreamLogoIDE.controller.MainWindowController">
     <top>
         <MenuBar prefHeight="30.0" BorderPane.alignment="CENTER">
@@ -31,8 +31,9 @@
         </Pane>
     </center>
     <left>
-        <VBox alignment="BOTTOM_CENTER" prefWidth="410.0" prefHeight="610" BorderPane.alignment="CENTER">
+        <VBox alignment="BOTTOM_CENTER" prefHeight="610" prefWidth="410.0" BorderPane.alignment="CENTER">
             <ListView fx:id="commandHistoryView" onMouseClicked="#handleHistoryListMouseEvent" VBox.vgrow="ALWAYS"/>
+            <TextArea fx:id="blockCommandArea" managed="false" editable="false" prefHeight="200.0"/>
             <TextField fx:id="commandInputField" onAction="#executeCommand" VBox.vgrow="NEVER"/>
             <TextField fx:id="errorMessageField" disable="true" VBox.vgrow="NEVER"/>
         </VBox>

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
@@ -51,6 +52,9 @@ public class MainWindowController {
 
     @FXML
     private BorderPane mainWindow;
+
+    @FXML
+    private TextArea blockCommandArea;
 
     private CommandParser commmandParser;
     private CommandRegistry commandRegistry;
@@ -179,10 +183,15 @@ public class MainWindowController {
     private void executeCommand(String commandLine) {
         try {
             Optional<Command> command = commmandParser.getCommand(commandLine);
-            if (command.isPresent())
+            if (command.isPresent()) {
                 commandRegistry.executeCommand(command.get(), turtle, shapeDrawer);
-            else
+                setCommandBlockAreaVisibility(false);
+
+            } else {
+                setCommandBlockAreaVisibility(true);
+                blockCommandArea.appendText(commandLine + "\n");
                 setErrorMessage("Not ended command");
+            }
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());
         }
@@ -192,4 +201,11 @@ public class MainWindowController {
         lines.forEach(this::executeCommand);
     }
 
+    private void setCommandBlockAreaVisibility(boolean visibility) {
+        blockCommandArea.setVisible(visibility);
+        blockCommandArea.setManaged(visibility);
+
+        if (!visibility)
+            blockCommandArea.clear();
+    }
 }
