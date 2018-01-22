@@ -12,4 +12,6 @@ public interface ShapeDrawer {
     void drawCircle(Position a, double r);
 
     void setDrawingHistory(boolean enable);
+
+    void saveCanvas();
 }

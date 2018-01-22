@@ -20,12 +20,18 @@ public class ProcedureCommand extends Command {
 
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        shapeDrawer.saveCanvas();
+        shapeDrawer.setDrawingHistory(false);
         commands.forEach(c -> c.execute(turtle, shapeDrawer));
+        shapeDrawer.setDrawingHistory(true);
     }
 
     @Override
     public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        shapeDrawer.setDrawingHistory(false);
         for (int i = commands.size() - 1; i >= 0; i--)
             commands.get(i).undo(turtle, shapeDrawer);
+        shapeDrawer.setDrawingHistory(true);
+        shapeDrawer.undoDrawing();
     }
 }

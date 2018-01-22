@@ -40,14 +40,20 @@ public class RepeatCommand extends Command {
 
     @Override
     public void execute(Turtle turtle, ShapeDrawer shapeDrawer) {
+        shapeDrawer.saveCanvas();
+        shapeDrawer.setDrawingHistory(false);
         for (int i = 0; i < n; i++)
             commands.forEach(c -> c.execute(turtle, shapeDrawer));
+        shapeDrawer.setDrawingHistory(true);
     }
 
     @Override
     public void undo(Turtle turtle, ShapeDrawer shapeDrawer) {
+        shapeDrawer.setDrawingHistory(false);
         for (int i = 0; i < n; i++)
             for (int j = commands.size() - 1; j >= 0; j--)
                 commands.get(j).undo(turtle, shapeDrawer);
+        shapeDrawer.setDrawingHistory(true);
+        shapeDrawer.undoDrawing();
     }
 }

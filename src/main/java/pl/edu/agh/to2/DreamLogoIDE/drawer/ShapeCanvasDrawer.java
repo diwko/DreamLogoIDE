@@ -31,7 +31,8 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
     }
 
     public void undoDrawing() {
-        graphicsContext.drawImage(prevSnapshots.pop(), 0.0, 0.0);
+        if (drawingHistory)
+            graphicsContext.drawImage(prevSnapshots.pop(), 0.0, 0.0);
     }
 
     public void clearCanvas() {
@@ -57,6 +58,10 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
 
     public void setDrawingHistory(boolean enable) {
         drawingHistory = enable;
+    }
+
+    public void saveCanvas() {
+        prevSnapshots.push(currentCanvas.snapshot(new SnapshotParameters(), null));
     }
 
     private void saveSnapshot() {
