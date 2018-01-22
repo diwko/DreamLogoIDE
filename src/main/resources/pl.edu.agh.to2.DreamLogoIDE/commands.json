@@ -113,7 +113,13 @@
     ],
     "className": "pl.edu.agh.to2.DreamLogoIDE.command.SetPenColorCommand",
     "argsNumber": 3
+  },
+  {
+    "keywords": [
+      "circle",
+      "okrąg"
+    ],
+    "className": "pl.edu.agh.to2.DreamLogoIDE.command.CircleCommand",
+    "argsNumber": 1
   }
-
-
 ]
