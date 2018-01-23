@@ -190,7 +190,7 @@ public class MainWindowController {
             } else {
                 setCommandBlockAreaVisibility(true);
                 blockCommandArea.appendText(commandLine + "\n");
-                setErrorMessage("Not ended command");
+                setErrorMessage("Not ended command, type END to end");
             }
         } catch (ParseException | IllegalStateException e) {
             setErrorMessage(e.getMessage());

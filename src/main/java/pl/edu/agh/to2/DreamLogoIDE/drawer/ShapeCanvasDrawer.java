@@ -41,18 +41,20 @@ public class ShapeCanvasDrawer implements ShapeDrawer {
     }
 
     public void drawLine(Position a, Position b) {
-        if (!turtle.isPenDown())
-            return;
-
         saveSnapshot();
+        if (!turtle.isPenDown()) {
+            return;
+        }
+
         graphicsContext.strokeLine(a.getX(), a.getY(), b.getX(), b.getY());
     }
 
     public void drawCircle(Position a, double r) {
-        if (!turtle.isPenDown())
-            return;
-
         saveSnapshot();
+        if (!turtle.isPenDown()) {
+            return;
+        }
+
         graphicsContext.strokeOval(a.getX() - r, a.getY() - r, 2 * r, 2 * r);
     }
 

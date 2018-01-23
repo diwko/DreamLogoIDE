@@ -19,9 +19,6 @@
                 <MenuItem mnemonicParsing="false" onAction="#undoCommand" text="Undo"/>
                 <MenuItem mnemonicParsing="false" onAction="#redoCommand" text="Redo"/>
             </Menu>
-            <Menu mnemonicParsing="false" text="Help">
-                <MenuItem mnemonicParsing="false" text="About"/>
-            </Menu>
         </MenuBar>
     </top>
     <center>
