@@ -116,6 +116,7 @@ public class MainWindowController {
         try {
             Stream<String> stream = Files.lines(Paths.get(f.getAbsolutePath()));
             executeCommands(stream.collect(Collectors.toList()));
+            errorMessageField.clear();
         } catch (IOException e) {
             setErrorMessage(e.getMessage());
         }

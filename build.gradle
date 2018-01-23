@@ -2,6 +2,7 @@ group 'com.gitlab.agh-to-2017.wt-1115-TeenageMutantLogoTurtles'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'application'
 
 sourceCompatibility = 1.8
 
@@ -22,3 +23,5 @@ jar {
 
     from configurations.runtime.collect { zipTree(it) }
 }
+
+mainClassName = 'pl.edu.agh.to2.DreamLogoIDE.Main'
