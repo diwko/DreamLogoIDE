@@ -50,18 +50,19 @@ public class TurtleDrawer {
     }
 
     private void drawTurtleIcon() {
+        Image rotated = rotateImage(turtle.getIcon(), turtle.getPosition().getRotation());
         graphicsContext.drawImage(
-                rotateImage(turtle.getIcon(), turtle.getPosition().getRotation()),
-                getXCenter(),
-                getYCenter());
+                rotated,
+                getXCenter(rotated),
+                getYCenter(rotated));
     }
 
-    private double getXCenter() {
-        return turtle.getPosition().getX() - turtle.getIcon().getWidth() / 2;
+    private double getXCenter(Image image) {
+        return turtle.getPosition().getX() - image.getWidth() / 2;
     }
 
-    private double getYCenter() {
-        return turtle.getPosition().getY() - turtle.getIcon().getHeight() / 2;
+    private double getYCenter(Image image) {
+        return turtle.getPosition().getY() - image.getHeight() / 2;
     }
 
     private Image rotateImage(Image image, double angle) {
