@@ -17,6 +17,8 @@ DreamLogoIDE
 >- **cs**: Clear screen (turtle returns to its initial position)
 >- **gb**: Go back to turtle's initial position (without cleaning the screen)
 >- **setPenSize x**: Set pen size to **x**
+>- **setColorSize r g b**: Set pen color with rgb (r,g,b = [0,255])
+>- **circle x**: Draw circle with diameter = **x**
 >- **repeat n [ cmd cmd ... ]**: repeat commands n times
 >- **to name :arg1 :arg2 ...** <br/>
     *commands, local variables* <br/>
@@ -34,7 +36,9 @@ DreamLogoIDE
 >- pu = **pod**
 >- pd = **opu**
 >- gb = **wróć**
->- setPenSize = **ugp**
+>- setPenSize = **ugp** / **setps**
+>- setPenColor =  **ukp** / **setpc
+>- circle = **okrąg**
 >- repeat = **loop** / **powtórz**
 >- to = **oto**
 >- make = **niech**
