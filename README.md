@@ -45,6 +45,17 @@ DreamLogoIDE
 
 
 **File Operations**
+>- save script
+>- open script
+
+
+**More**
+>- undo
+>- redo
 
 
 Check it!
+
+### Screenshot:
+
+![screenshot](https://github.com/diwko/DreamLogoIDE/blob/master/screenshot.png  "screenshot")
